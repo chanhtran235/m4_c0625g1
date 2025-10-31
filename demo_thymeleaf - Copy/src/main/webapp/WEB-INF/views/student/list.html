@@ -14,6 +14,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
+        <th>Subjects</th>
         <th>Class name</th>
         <th>Detail-RP</th>
         <th>Detail-PV</th>
@@ -26,6 +27,9 @@
         <td th:switch="${student.gender}">
             <span th:case="true" th:text="Nam"></span>
             <span th:case="false" th:text="Nữ"></span>
+        </td>
+        <td>
+            <span th:each="sub:${student.subjects}" th:text="${sub}"></span>
         </td>
         <td th:text="${student.className}"></td>
         <td>

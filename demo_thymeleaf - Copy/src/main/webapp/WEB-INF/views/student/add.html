@@ -7,10 +7,12 @@
 <body>
 <h2>Thêm mới</h2>
 <form action="/students/add" method="post" th:object="${student}">
+    <input th:field="*{id}" placeholder="Nhập id"><br>
     <input th:field="*{name}" placeholder="Nhập tên"><br>
 
     <input type="radio" th:field="*{gender}" th:value="1"> Nam
     <input type="radio" th:field="*{gender}" th:value="0"> Nữ <br>
+    <input type="checkbox" th:field="*{subjects}" th:each="sub:${subjects}" th:value="${sub}" th:text="${sub}"><br>
     <select th:field="*{className}">
         <option value="">----Chọn-------</option>
         <option value="C06">C0625G1</option>

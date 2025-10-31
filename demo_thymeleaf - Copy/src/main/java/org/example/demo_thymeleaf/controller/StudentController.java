@@ -16,6 +16,11 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private IStudentService studentService;
+    @ModelAttribute("subjects")
+    public List<String> getSubjects(){
+        System.out.println("-------------Attribute run------------------------");
+        return List.of("JS","JAVA","SQL","PHP");
+    }
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showList(ModelMap model){
         List<Student> studentList = studentService.findAll();
@@ -25,17 +30,14 @@ public class StudentController {
     @GetMapping("/add")
     public String showFormAdd(Model model){
         model.addAttribute("student",new Student());
+//        model.addAttribute("subjects",List.of("JS","JAVA","SQL","PHP"));
         return "student/add";
     }
     @PostMapping("/add")
     public String save(@ModelAttribute Student student,
                        RedirectAttributes redirectAttributes){
-       boolean check= studentService.add(student);
-       String mess = "Không thành công";
-       if (check){
-           mess = "Thành công";
-       }
-        redirectAttributes.addFlashAttribute("mess",mess);
+        studentService.add(student);
+        redirectAttributes.addFlashAttribute("mess","Them moi thanh cong");
         return "redirect:/students";
     }
     @GetMapping("/detail")
@@ -46,7 +48,7 @@ public class StudentController {
 
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/detail/{id:[12]}")
     public String detail2(@PathVariable(name = "id")int id,
                           Model model){
         model.addAttribute("student", studentService.findById(id));
