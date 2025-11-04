@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:insert="~{layout/layout::library('Thêm mới')}"/>
+</head>
+<body>
+<h2>Thêm mới</h2>
+<form action="/students/add" method="post" th:object="${student}">
+    <input th:field="*{name}" placeholder="Nhập tên"><br>
+
+    <input type="radio" th:field="*{gender}" th:value="1"> Nam
+    <input type="radio" th:field="*{gender}" th:value="0"> Nữ <br>
+    <button>Lưu</button>
+</form>
+</body>
+</html>
