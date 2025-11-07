@@ -3,6 +3,7 @@ package org.example.demo_spring_data_jpa.controller;
 import jakarta.validation.Valid;
 import org.example.demo_spring_data_jpa.dto.StudentDto;
 import org.example.demo_spring_data_jpa.entity.Student;
+import org.example.demo_spring_data_jpa.exception.DuplicateNameAdminException;
 import org.example.demo_spring_data_jpa.service.IStudentService;
 import org.example.demo_spring_data_jpa.validate.StudentValidate;
 import org.springframework.beans.BeanUtils;
@@ -26,15 +27,6 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private IStudentService studentService;
-//    @RequestMapping(value = "", method = RequestMethod.GET)
-//    public String showList(@PageableDefault(page = 0,size = 2,sort = "name",direction = Sort.Direction.ASC) Pageable pageable,
-//                           @RequestParam(name = "searchName",required = false, defaultValue = "") String searchName,
-//                           ModelMap model){
-//        Page<Student> studentPage = studentService.findAllByNameContaining(searchName,pageable);
-//        model.addAttribute("studentPage", studentPage);
-//        model.addAttribute("searchName", searchName);
-//        return "student/list";
-//    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showList(
@@ -58,7 +50,7 @@ public class StudentController {
 
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute StudentDto studentDto, BindingResult bindingResult,
-                       RedirectAttributes redirectAttributes) {
+                       RedirectAttributes redirectAttributes) throws DuplicateNameAdminException {
         // sử dụng cho custom validate
         StudentValidate studentValidate = new StudentValidate();
         studentValidate.validate(studentDto,bindingResult);
@@ -91,6 +83,10 @@ public class StudentController {
         model.addAttribute("student", studentService.findById(id));
         return "/student/detail";
 
+    }
+    @ExceptionHandler(DuplicateNameAdminException.class)
+    public String exceptionHandle(){
+        return "client-exception";
     }
 
 
