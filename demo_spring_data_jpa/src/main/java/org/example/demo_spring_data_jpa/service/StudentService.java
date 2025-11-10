@@ -34,11 +34,22 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public boolean add(Student student) throws DuplicateNameAdminException {
+    public boolean save(Student student) throws DuplicateNameAdminException {
         if (student.getName().equals("Admin")){
             throw new DuplicateNameAdminException("Tên trùng với admin");
         }
         return studentRepository.save(student)!=null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        try{
+            studentRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
     @Override
