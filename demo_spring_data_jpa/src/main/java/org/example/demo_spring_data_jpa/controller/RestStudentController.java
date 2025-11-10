@@ -32,7 +32,7 @@ public class RestStudentController {
     public ResponseEntity<Student> getById(@PathVariable("id")int id){
         Student student = studentService.findById(id);
         if (student ==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 ( thành công không trả về dữ lieu;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 (lỗi không tìm thấy dữ liệu);
         }
         return new ResponseEntity<>(student,HttpStatus.OK); // 200
     }
@@ -51,7 +51,7 @@ public class RestStudentController {
     public ResponseEntity<Student> deleteById(@PathVariable("id")int id){
         Student student = studentService.findById(id);
         if (student ==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 ( thành công không trả về dữ lieu;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 (lỗi không tìm thấy dữ liệu);
         }
         // gọi method xoá để xoá
         studentService.delete(id);
@@ -62,7 +62,7 @@ public class RestStudentController {
                                               @RequestBody StudentDto studentDto) throws DuplicateNameAdminException {
         Student student = studentService.findById(id);
         if (student ==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 ( thành công không trả về dữ lieu;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 (lỗi không tìm thấy dữ liệu);
         }
         BeanUtils.copyProperties(studentDto,student);
         studentService.save(student);
